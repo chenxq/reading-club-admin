@@ -38,9 +38,8 @@
             "imageUrl" : "https://img3.doubanio.com/view/subject/l/public/s24940056.jpg",
             "price" : 48.00,
             "press" : "机械工业出版社",
-            "createdTime" : "",
-            "updatedTime" : "",
-            "visible" : true
+            "createdTime" : "2019-01-01T00:00:00Z",
+            "updatedTime" : "2019-01-01T00:00:03Z"
           }
         ]
     }
@@ -54,8 +53,8 @@
 
   OR
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ "error" : "You are unauthorized to make this request." }`
+  * **Code:** 500 Server Error <br />
+    **Content:** `{ "error" : "Server error." }`
 
 * **Sample Call:**
 
