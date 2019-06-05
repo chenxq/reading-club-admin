@@ -2,6 +2,18 @@
 
 .App {
   text-align: center;
+  font-size: 40px;
+}
+
+.bookList {
+  text-align: center;
+  color: blue;
+  font-size: 40px;
+}
+
+.list {
+  text-align: center;
+  font-size: 30px;
 }
 
 .App-logo {
