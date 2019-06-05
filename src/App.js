@@ -5,6 +5,7 @@ import HomePage from "./views/Home";
 
 import "./App.css";
 import BookList from "./views/BookList";
+import BookDetail from "./views/BookDetail";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -86,6 +87,9 @@ function App() {
               <Breadcrumb.Item>
                 <Link to="/booklist">Book List</Link>
               </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link to="/bookdetail">Book Detail</Link>
+              </Breadcrumb.Item>
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb>
             <Content
@@ -98,6 +102,7 @@ function App() {
             >
               <Route exact path="/" component={HomePage} />
               <Route path="/booklist" component={BookList} />
+              <Route path="/bookdetail" component={BookDetail} />
             </Content>
           </Layout>
         </Layout>
