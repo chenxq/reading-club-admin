@@ -2,6 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import requesBookDetail from "../../actions/bookDetail";
 
+import BookDetailPanel from "../../components/BookDetailPanel";
+import MoreLink from "../../components/MoreLink";
+
 class BookDetail extends React.Component {
   displayStatus = () => {
     const { res } = this.props;
@@ -29,25 +32,19 @@ class BookDetail extends React.Component {
 
   componentDidMount() {
     const { getBookDetail } = this.props;
-    // getBookDetail && getBookDetail(1);
-    const bookID=this.props;
-    getBookDetail && getBookDetail(bookID);
-
+    getBookDetail && getBookDetail(1);
+    // const bookID=this.props;
+    // getBookDetail && getBookDetail(bookID);
   }
 
   render() {
-    const message=this.displayStatus(); 
+    const message = this.displayStatus();
     return (
       <div>
-        <p>ID: {message.ID}</p>
-        <p>Name: {message.book_name}</p>
-        <p>Author: {message.author}</p>
-        <p>ISBN: {message.isbn}</p>
-        <p>press: {message.press}</p> 
-        <p>price: ￥{message.price}</p>  
-        <img src={message.image_url} alt='pic'></img>
-        <p></p>
-        <a href={message.douban_url}>More detail</a>
+        {
+          !message ? <div>Loading...</div> : <BookDetailPanel message={message} />
+        }
+        <MoreLink linkUrl={message.douban_url} />
       </div>
     );
   }
