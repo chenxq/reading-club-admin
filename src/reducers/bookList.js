@@ -1,20 +1,29 @@
-import { GET_BOOK_LIST } from '../actions/getBookList';
+import { FAILURE_REQUEST, START_REQUEST, SUCCESS_REQUEST } from '../actions/getBookList';
 
 const initialState = {
-    // message: 'There is no books in your library!',
+    loading: "init",
     bookListArray: []
 };
 
 export default function getBookList(state = initialState, action) {
-    // const bookListArray = state.bookListArray;
     console.log('reducer', state, action);
     console.log('action type: ', action.type);
     switch(action.type) {
-        case GET_BOOK_LIST:
-            const newState = JSON.parse(JSON.stringify(state));
-            newState.bookListArray=action.payload.bookListArray;
-            console.log('reducer');
-            return newState;
+        case START_REQUEST: {
+            return {loading: 'init'};
+        }
+        case SUCCESS_REQUEST: {
+            return {
+                ...state,
+                ...action.payload
+            };
+        }
+        case FAILURE_REQUEST: {
+            return {
+                ...state,
+                loading: "failed"
+            };
+        }
         default:
             return state;
     }

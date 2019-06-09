@@ -2,33 +2,32 @@ import axios from 'axios';
 
 export const GET_BOOK_LIST = 'GET_BOOK_LIST';
 
-function get(){
-    return {
-        type: 'GET',
-    }
-}
+const START_REQUEST = 'START_REQUEST';
+const SUCCESS_REQUEST = 'SUCCESS_REQUEST';
+const FAILURE_REQUEST = 'FAILURE_REQUEST';
 
-function bookList(bookListArray){
+export {START_REQUEST, SUCCESS_REQUEST, FAILURE_REQUEST};
+
+
+function bookList(actionType, bookListArray={}){
     return {
-        type: 'GET_BOOK_LIST',
+        type: actionType,
         payload: { bookListArray }
     }
 }
 
 export default function getBookList() {
-    return (dispatch) => {
-        axios.get('https://reading-club-backend.herokuapp.com/book/1')
+    return dispatch => {
+        dispatch(bookList(START_REQUEST));
+        axios
+            .get('https://reading-club-backend.herokuapp.com/books')
             .then(res => {
-                var str = JSON.parse(res.data.message);
-                console.log('------>', str);
-                dispatch(bookList(str));
-                // this.setState(
-                //     {bookListArray: str},
-                //     () => {
-                //         console.log("done!!!!!!", this.state);
-                //     }
-                // );
-                dispatch(get());
-            }).catch(error => {})
-    }
+                var list = res.data.message;
+                console.log('------>', list);
+                dispatch(bookList(SUCCESS_REQUEST, list));
+            })
+            .catch(error => {
+                dispatch(bookList(FAILURE_REQUEST, error));
+            });
+    };
 }
