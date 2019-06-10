@@ -66,16 +66,3 @@
 
   * **Code:** 500 Server Error <br />
     **Content:** `{ "error" : "Server error." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/history/user/12",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```

@@ -4,7 +4,7 @@
 
 * **URL**
 
-  /book/return
+  /return
 
 * **Method:**
 
@@ -18,7 +18,8 @@
 
   ```json
   {
-      "bookId" : 12
+      "bookID" : 12,
+      "userID" : 12
   }
   ```
 
@@ -30,34 +31,17 @@
     {
       "message":
         { 
-            "bookId" : 12, 
-            "leftAmount" : 2,
-            "operateTime" : "2019-01-01T00:00:00Z"
+            "bookID" : 12,
+            "createdTime" : "2019-01-01T00:00:00Z"
         }
     }
     ```
 * **Error Response:**
 
   * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ "error" : "Book doesn't exist" }`
+    **Content:** `{ "error" : "The book you are looking for does not exist!" }`
 
   OR
 
   * **Code:** 500 Server Error <br />
-    **Content:** `{ "error" : "Server error." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/book/return",
-      dataType: "json",
-      type : "POST",
-      data : {
-          "bookId" : 12
-      }
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
+    **Content:** `{ "error" : "Post data error!" }`

@@ -18,7 +18,7 @@
 
 * **Data Params**
 
-  None
+  11
 
 * **Success Response:**
 
@@ -66,16 +66,3 @@
 
   * **Code:** 500 Server Error <br />
     **Content:** `{ "error" : "Server error." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/history/book/11",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```

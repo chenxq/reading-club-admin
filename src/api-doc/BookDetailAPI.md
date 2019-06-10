@@ -18,7 +18,7 @@
 
 * **Data Params**
 
-  None
+  12
 
 * **Success Response:**
 
@@ -38,6 +38,7 @@
             "imageUrl" : "https://img3.doubanio.com/view/subject/l/public/s24940056.jpg",
             "price" : 48.00,
             "press" : "机械工业出版社",
+            "description" : "a short description of this book",
             "createdTime" : "2019-01-01T00:00:00Z",
             "updatedTime" : "2019-01-01T00:00:03Z"
           }
@@ -55,16 +56,3 @@
 
   * **Code:** 500 Server Error <br />
     **Content:** `{ "error" : "Server error." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/book/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
