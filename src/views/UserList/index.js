@@ -12,12 +12,14 @@ class UserList extends React.Component {
       userList: props.response.userListArray,
     };
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       loading: nextProps.response.loading,
       userList: nextProps.response.userListArray,
     });
   }
+
   componentDidMount() {
     const { getUserList } = this.props;
     getUserList && getUserList();
@@ -63,6 +65,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getUserList: () => getUserList()(dispatch),
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
