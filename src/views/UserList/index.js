@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getUserList from '../../actions/userAction';
-//import userReducer from '../../reducers/userReducer';
 
 import { Table } from 'antd';
 
