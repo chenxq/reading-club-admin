@@ -1,11 +1,12 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import HomePage from "./views/Home";
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import HomePage from './views/Home';
 
-import "./App.css";
-import BookList from "./views/BookList";
-import BookDetail from "./views/BookDetail";
+import './App.css';
+import BookList from './views/BookList';
+import BookDetail from './views/BookDetail';
+import UserListContainer from './views/UserList';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -19,8 +20,8 @@ function App() {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            style={{ lineHeight: "64px" }}
+            defaultSelectedKeys={['2']}
+            style={{ lineHeight: '64px' }}
           >
             <Menu.Item key="1">nav 1</Menu.Item>
             <Menu.Item key="2">nav 2</Menu.Item>
@@ -28,12 +29,12 @@ function App() {
           </Menu>
         </Header>
         <Layout>
-          <Sider width={200} style={{ background: "#fff" }}>
+          <Sider width={200} style={{ background: '#fff' }}>
             <Menu
               mode="inline"
-              defaultSelectedKeys={["1"]}
-              defaultOpenKeys={["sub1"]}
-              style={{ height: "100%", borderRight: 0 }}
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%', borderRight: 0 }}
             >
               <SubMenu
                 key="sub1"
@@ -79,8 +80,8 @@ function App() {
               </SubMenu>
             </Menu>
           </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
+          <Layout style={{ padding: '0 24px 24px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>
                 <Link to="/">Home</Link>
               </Breadcrumb.Item>
@@ -90,19 +91,23 @@ function App() {
               <Breadcrumb.Item>
                 <Link to="/bookdetail">Book Detail</Link>
               </Breadcrumb.Item>
+              <Breadcrumb.Item>
+                <Link to="/userlist">User List</Link>
+              </Breadcrumb.Item>
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb>
             <Content
               style={{
-                background: "#fff",
+                background: '#fff',
                 padding: 24,
                 margin: 0,
-                minHeight: 280
+                minHeight: 280,
               }}
             >
               <Route exact path="/" component={HomePage} />
               <Route path="/booklist" component={BookList} />
               <Route path="/bookdetail" component={BookDetail} />
+              <Route path="/userlist" component={UserListContainer} />
             </Content>
           </Layout>
         </Layout>
