@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
 import BookListItem from '../../components/BookListItem';
 import { List } from 'antd';
-import Loading from '../../components/Loading';
 
 class BookList extends React.Component {
   componentDidMount() {
@@ -13,10 +12,7 @@ class BookList extends React.Component {
 
   renderLoadingMessage = () => {
     const { bookList } = this.props;
-    if (bookList.loading === "init"){
-      return <Loading />;
-    }
-    // return bookList.loading || 'empty';
+    return bookList.loading || 'empty';
   }
 
   renderBookList = () => {
@@ -50,6 +46,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getBookList: () => getBookList()(dispatch)
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookList);
