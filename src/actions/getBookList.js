@@ -10,25 +10,25 @@ export { START_REQUEST, SUCCESS_REQUEST, FAILURE_REQUEST, bookList };
 
 
 function bookList(actionType, bookListArray = {}) {
-    return {
-        type: actionType,
-        payload: { bookListArray }
-    }
+  return {
+    type: actionType,
+    payload: { bookListArray }
+  }
 }
 
 export default function getBookList() {
-    return async (dispatch) => {
-        dispatch(bookList(START_REQUEST));
-        try {
-            const ret = await fetchBookList();
-            if (!ret) {
-                dispatch(bookList(FAILURE_REQUEST, { msg: "Something wrong!" }));
-                return;
-            }
-            dispatch(bookList(SUCCESS_REQUEST, ret));
-        } catch (e) {
-            dispatch(bookList(FAILURE_REQUEST, { msg: "Something wrong!" }));
-            return;
-        }
-    };
+  return async (dispatch) => {
+    dispatch(bookList(START_REQUEST));
+    try {
+      const ret = await fetchBookList();
+      if (!ret) {
+        dispatch(bookList(FAILURE_REQUEST, { msg: "Something wrong!" }));
+        return;
+      }
+      dispatch(bookList(SUCCESS_REQUEST, ret));
+    } catch (e) {
+      dispatch(bookList(FAILURE_REQUEST, { msg: "Something wrong!" }));
+      return;
+    }
+  };
 }

@@ -17,12 +17,10 @@ class BookList extends React.Component {
 
   renderBookList = () => {
     const { bookList: { bookListArray } } = this.props;
-    console.log('BookList: ', bookListArray, ' ', typeof bookListArray);
     return bookListArray;
   }
 
   render() {
-    console.log('===>', this.props);
     return (
       <div>
         <div>
