@@ -32,11 +32,9 @@
   "terminal.integrated.env.windows": {
     "SFDX_SET_CLIENT_IDS": "sfdx-vscode"
   },
-  // Disable default VSCode formatting for JavaScript
   "[javascript]": {
     "editor.formatOnSave": true 
   },
-  // Allow formatting for other languages
   "editor.formatOnSave": false,
   "eslint.autoFixOnSave": false,
 }
