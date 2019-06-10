@@ -4,5 +4,5 @@ import userReducer from './userReducer';
 
 export default combineReducers({
   bookDetail: bookDetailReducer,
-  user: userReducer,
+  userresponse: userReducer,
 });
