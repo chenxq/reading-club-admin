@@ -80,7 +80,7 @@ function App() {
                 key="Settings"
                 title={
                   <span>
-                    <Icon type="settings" />
+                    <Icon type="setting" />
                     Settings
                   </span>
                 }
