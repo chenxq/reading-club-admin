@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Row, Col, Button } from 'antd';
 import HomePage from './views/Home';
 
 import './App.css';
@@ -16,60 +16,71 @@ function App() {
     <Router>
       <Layout>
         <Header className="header">
-          <div className="logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            style={{ lineHeight: '64px' }}
-          >
-            <Menu.Item key="1">nav 1</Menu.Item>
-            <Menu.Item key="2">nav 2</Menu.Item>
-            <Menu.Item key="3">nav 3</Menu.Item>
-          </Menu>
+          <Row type="flex" justify="space-between" align="middle">
+            <Col span={8}>
+              <div className="logo">
+                <span style={{ color: 'white', fontSize: 18 }}>
+                  Reading Club
+                </span>
+              </div>
+            </Col>
+            <Col />
+            <Col span={8}>
+              <Row type="flex" justify="end" align="middle">
+                <Button type="primary">
+                  Login<Icon type="login" />
+                </Button>
+                <div style={{ width: '20px' }} />>
+                <Button type="link">Logout</Button>
+              </Row>
+            </Col>
+          </Row>
         </Header>
         <Layout>
           <Sider width={200} style={{ background: '#fff' }}>
             <Menu
               mode="inline"
               defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
+              defaultOpenKeys={['Book']}
               style={{ height: '100%', borderRight: 0 }}
             >
               <SubMenu
-                key="sub1"
+                key="Book"
+                title={
+                  <span>
+                    <Icon type="book" />
+                    Books
+                  </span>
+                }
+              >
+                <Menu.Item key="1">
+                  <Link to="/booklist">Book List</Link>
+                </Menu.Item>
+                <Menu.Item key="2">Borrowed Books</Menu.Item>
+                <Menu.Item key="3">Unborrowed Books</Menu.Item>
+              </SubMenu>
+              <SubMenu
+                key="User"
                 title={
                   <span>
                     <Icon type="user" />
-                    subnav 1
+                    Users
                   </span>
                 }
               >
-                <Menu.Item key="1">option1</Menu.Item>
-                <Menu.Item key="2">option2</Menu.Item>
-                <Menu.Item key="3">option3</Menu.Item>
-                <Menu.Item key="4">option4</Menu.Item>
-              </SubMenu>
-              <SubMenu
-                key="sub2"
-                title={
-                  <span>
-                    <Icon type="laptop" />
-                    subnav 2
-                  </span>
-                }
-              >
-                <Menu.Item key="5">option5</Menu.Item>
+                <Menu.Item key="5">
+                  <Link to="/userlist">User List</Link>
+                </Menu.Item>
                 <Menu.Item key="6">option6</Menu.Item>
                 <Menu.Item key="7">option7</Menu.Item>
                 <Menu.Item key="8">option8</Menu.Item>
               </SubMenu>
               <SubMenu
-                key="sub3"
+                key="Settings"
                 title={
                   <span>
-                    <Icon type="notification" />
-                    subnav 3
+                    <Icon type="settings" />
+                    Settings
                   </span>
                 }
               >
@@ -86,13 +97,7 @@ function App() {
                 <Link to="/">Home</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
-                <Link to="/booklist">Book List</Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
                 <Link to="/bookdetail">Book Detail</Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <Link to="/userlist">User List</Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb>
@@ -101,7 +106,7 @@ function App() {
                 background: '#fff',
                 padding: 24,
                 margin: 0,
-                minHeight: 280,
+                minHeight: 600,
               }}
             >
               <Route exact path="/" component={HomePage} />
