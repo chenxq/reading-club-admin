@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon, Row, Col, Button } from 'antd';
+import { Layout, Menu, Icon, Row, Col, Button } from 'antd';
 import HomePage from './views/Home';
 
 import './App.css';
 import BookList from './views/BookList';
 import BookDetail from './views/BookDetail';
 import UserListContainer from './views/UserList';
+import Breadcrumbs from './views/Breadcrumbs';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -17,7 +18,7 @@ function App() {
       <Layout>
         <Header className="header">
           <Row type="flex" justify="space-between" align="middle">
-            <Col span={8}>
+            <Col span={1}>
               <div className="logo">
                 <span style={{ color: 'white', fontSize: 18 }}>
                   Reading Club
@@ -25,7 +26,7 @@ function App() {
               </div>
             </Col>
             <Col />
-            <Col span={8}>
+            <Col span={1}>
               <Row type="flex" justify="end" align="middle">
                 <Button type="primary">
                   Login<Icon type="login" />
@@ -54,7 +55,7 @@ function App() {
                 }
               >
                 <Menu.Item key="1">
-                  <Link to="/booklist">Book List</Link>
+                  <Link to="/home/booklist">Book List</Link>
                 </Menu.Item>
                 <Menu.Item key="2">Borrowed Books</Menu.Item>
                 <Menu.Item key="3">Unborrowed Books</Menu.Item>
@@ -69,7 +70,7 @@ function App() {
                 }
               >
                 <Menu.Item key="5">
-                  <Link to="/userlist">User List</Link>
+                  <Link to="/home/userlist">User List</Link>
                 </Menu.Item>
                 <Menu.Item key="6">option6</Menu.Item>
                 <Menu.Item key="7">option7</Menu.Item>
@@ -79,28 +80,18 @@ function App() {
                 key="Settings"
                 title={
                   <span>
-                    <Icon type="settings" />
+                    <Icon type="setting" />
                     Settings
                   </span>
                 }
               >
                 <Menu.Item key="9">option9</Menu.Item>
                 <Menu.Item key="10">option10</Menu.Item>
-                <Menu.Item key="11">option11</Menu.Item>
-                <Menu.Item key="12">option12</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>
-                <Link to="/">Home</Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <Link to="/bookdetail">Book Detail</Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+            <Breadcrumbs />
             <Content
               style={{
                 background: '#fff',
@@ -109,10 +100,14 @@ function App() {
                 minHeight: 600,
               }}
             >
-              <Route exact path="/" component={HomePage} />
-              <Route path="/booklist" component={BookList} />
-              <Route path="/bookdetail" component={BookDetail} />
-              <Route path="/userlist" component={UserListContainer} />
+              <Route exact path="/home" component={HomePage} />
+              <Route path="/home/booklist" component={BookList} />
+              <Route path="/home/booklist/detail" component={BookDetail} />
+              <Route path="/home/userlist" component={UserListContainer} />
+              <Route
+                path="/home/userlist/detail"
+                component={UserListContainer}
+              />
             </Content>
           </Layout>
         </Layout>
