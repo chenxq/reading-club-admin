@@ -18,18 +18,18 @@ function App() {
       <Layout>
         <Header className="header">
           <Row type="flex" justify="space-between" align="middle">
-            <Col span={1}>
+            <Col span={8}>
               <div className="logo">
                 <span style={{ color: 'white', fontSize: 18 }}>
                   Reading Club
                 </span>
               </div>
             </Col>
-            <Col />
-            <Col span={1}>
+            <Col span={8}>
               <Row type="flex" justify="end" align="middle">
                 <Button type="primary">
-                  Login<Icon type="login" />
+                  Login
+                  <Icon type="login" />
                 </Button>
                 <div style={{ width: '20px' }} />>
                 <Button type="link">Logout</Button>
