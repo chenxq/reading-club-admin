@@ -1,5 +1,5 @@
 import axios from "axios";
-const SERVER_URL = "https://reading-club-backend.herokuapp.com/books";
+const SERVER_URL = "https://reading-club-backend.herokuapp.com/book/list";
 
 export default async function fetchBookList() {
   try {

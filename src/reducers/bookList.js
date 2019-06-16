@@ -1,7 +1,7 @@
 import { FAILURE_REQUEST, START_REQUEST, SUCCESS_REQUEST } from '../actions/getBookList';
 
 const initialState = {
-  loading: "init",
+  loading: true,
   bookListArray: []
 };
 
@@ -10,18 +10,20 @@ export default function getBookList(state = initialState, action) {
   console.log('action type: ', action.type);
   switch (action.type) {
     case START_REQUEST: {
-      return { loading: 'init' };
+      return { ...state, loading: true };
     }
     case SUCCESS_REQUEST: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
+        loading: false
       };
     }
     case FAILURE_REQUEST: {
       return {
         ...state,
-        loading: "failed"
+        ...action.payload,
+        loading: false
       };
     }
     default:
