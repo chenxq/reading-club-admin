@@ -12,7 +12,7 @@ export { START_REQUEST, SUCCESS_REQUEST, FAILURE_REQUEST, bookList };
 function bookList(actionType, bookListArray = {}) {
   return {
     type: actionType,
-    payload: { bookListArray }
+    payload: { bookListArray: bookListArray }
   }
 }
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
-import BookListItem from '../../components/BookListItem';
-import { List } from 'antd';
+import { Table } from 'antd';
 
 class BookList extends React.Component {
   componentDidMount() {
@@ -12,8 +11,8 @@ class BookList extends React.Component {
 
   renderLoadingMessage = () => {
     const { bookList } = this.props;
-    return bookList.loading || 'empty';
-  }
+    return bookList.loading;
+  };
 
   renderBookList = () => {
     const { bookList: { bookListArray } } = this.props;
@@ -21,19 +20,43 @@ class BookList extends React.Component {
   }
 
   render() {
+    const columns = [
+      {
+        title: '图书编号',
+        dataIndex: 'id',
+      },
+      {
+        title: '图书名称',
+        dataIndex: 'name',
+      },
+      {
+        title: '作者',
+        dataIndex: 'author',
+      },
+      {
+        title: '简介',
+        dataIndex: 'description',
+      },
+      {
+        title: '封面',
+        render: (record) => {
+          return <img src={record.imageUrl} style={{ height: '100px', }} />
+        }
+      },
+      {
+        title: '操作',
+      },
+    ];
+
     return (
       <div>
-        <div>
-          <List
-            itemLayout="horizontal"
-            dataSource={this.renderBookList()}
-            renderItem={item => (
-              BookListItem(item)
-            )}
-          />
-        </div>
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={this.renderBookList()}
+        />
       </div>
-    )
+    );
   }
 }
 
