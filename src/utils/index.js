@@ -24,10 +24,15 @@ export default class HttpRequest {
     }
   }
 
+  /**
+   * Get service
+   * @param {*} path
+   * @param {*} data {a:1,b:2} will be transformed to ?a=1&b=2
+   */
   static async getService(path, data = {}) {
     const requestUrl = HttpRequest._getRequestUrl(path);
     try {
-      const ret = await axios.get(requestUrl, data);
+      const ret = await axios.get(requestUrl, { params: data });
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
