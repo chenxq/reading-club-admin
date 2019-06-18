@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
+
+import borrowBookService, { addBook } from '../../services/borrowBook';
 
 class BookList extends React.Component {
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
-  };
+  }
 
   renderLoadingMessage = () => {
     const { bookList } = this.props;
@@ -15,9 +17,21 @@ class BookList extends React.Component {
   };
 
   renderBookList = () => {
-    const { bookList: { bookListArray } } = this.props;
+    const {
+      bookList: { bookListArray },
+    } = this.props;
     return bookListArray;
-  }
+  };
+
+  handleBorrowBook = async () => {
+    const ret = await borrowBookService('joe', 2);
+    console.log('borrow book', ret);
+  };
+
+  handleAddBook = async () => {
+    const ret = await addBook({ name: 'some book', author: 'some author' });
+    console.log('add book', ret);
+  };
 
   render() {
     const columns = [
@@ -40,8 +54,8 @@ class BookList extends React.Component {
       {
         title: '封面',
         render: (record) => {
-          return <img src={record.imageUrl} style={{ height: '100px', }} />
-        }
+          return <img src={record.imageUrl} style={{ height: '100px' }} />;
+        },
       },
       {
         title: '操作',
@@ -55,17 +69,26 @@ class BookList extends React.Component {
           columns={columns}
           dataSource={this.renderBookList()}
         />
+        <Button type="primary" onClick={this.handleBorrowBook}>
+          Borrow a Book
+        </Button>
+        <Button type="primary" onClick={this.handleAddBook}>
+          Add a Book
+        </Button>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookList: state.bookList,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getBookList: () => getBookList()(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  getBookList: () => getBookList()(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookList);
