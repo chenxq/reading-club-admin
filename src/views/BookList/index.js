@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
 class BookList extends React.Component {
   componentDidMount() {
@@ -55,6 +55,9 @@ class BookList extends React.Component {
           columns={columns}
           dataSource={this.renderBookList()}
         />
+        <Button href="/home/addBook" type="primary" style={{ marginBottom: 16 }}>
+          添加书籍
+        </Button>
       </div>
     );
   }

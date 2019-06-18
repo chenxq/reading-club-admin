@@ -5,6 +5,7 @@ import HomePage from './views/Home';
 
 import './App.css';
 import BookList from './views/BookList';
+import AddBook from './views/AddBook';
 import BookDetail from './views/BookDetail';
 import UserListContainer from './views/UserList';
 import Breadcrumbs from './views/Breadcrumbs';
@@ -102,6 +103,7 @@ function App() {
             >
               <Route exact path="/home" component={HomePage} />
               <Route path="/home/booklist" component={BookList} />
+              <Route path="/home/addBook" component={AddBook} />
               <Route path="/home/booklist/detail" component={BookDetail} />
               <Route path="/home/userlist" component={UserListContainer} />
               <Route
