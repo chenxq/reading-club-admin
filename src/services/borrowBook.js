@@ -1,6 +1,6 @@
 import HttpRequest from '../utils';
 
-export default async function borrowBook(username, bookID) {
+export default async function borrowBook({ username, bookID }) {
   try {
     const ret = await HttpRequest.postService('/book/borrow', {
       username,

@@ -27,7 +27,7 @@ class BookList extends React.Component {
   };
 
   handleBorrowBook = async () => {
-    const ret = await borrowBookService('joe', 2);
+    const ret = await borrowBookService({ username: 'joe', bookID: 2 });
     console.log('borrow book', ret);
   };
 
