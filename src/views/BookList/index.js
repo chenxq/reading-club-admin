@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
 import { Table, Button } from 'antd';
 
-import borrowBookService, { addBook } from '../../services/borrowBook';
+import borrowBookService, {
+  addBook,
+  getBookList as getBookListService,
+} from '../../services/borrowBook';
 
 class BookList extends React.Component {
   componentDidMount() {
@@ -31,6 +34,11 @@ class BookList extends React.Component {
   handleAddBook = async () => {
     const ret = await addBook({ name: 'some book', author: 'some author' });
     console.log('add book', ret);
+  };
+
+  handleBookList = async () => {
+    const ret = await getBookListService({ username: 'john' });
+    console.log('get book list', ret);
   };
 
   render() {
@@ -74,6 +82,9 @@ class BookList extends React.Component {
         </Button>
         <Button type="primary" onClick={this.handleAddBook}>
           Add a Book
+        </Button>
+        <Button type="primary" onClick={this.handleBookList}>
+          Get Book List
         </Button>
       </div>
     );

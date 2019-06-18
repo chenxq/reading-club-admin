@@ -23,3 +23,12 @@ export async function addBook({ name, author }) {
     console.error('Borrow book error: ', error);
   }
 }
+
+export async function getBookList(data = {}) {
+  try {
+    const ret = await HttpRequest.getService('/book/list', data);
+    return ret;
+  } catch (error) {
+    console.error('Borrow book error: ', error);
+  }
+}
