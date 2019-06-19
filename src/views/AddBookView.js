@@ -1,15 +1,11 @@
 import React from 'react';
-import { PageHeader, Input, Button, Form } from 'antd';
+import { PageHeader, Input, Button, Form, Spin } from 'antd';
 import { connect } from 'react-redux';
 import addBookAction from '../actions/addBookAction';
 
 class AddBookView extends React.Component {
   constructor(props) {
     super();
-    this.state = {
-      status: 0, // 0: initial, 1: success, 2: failure
-      values: [],
-    };
   }
 
   handleSubmit = (e) => {
@@ -22,13 +18,14 @@ class AddBookView extends React.Component {
           status: 1,
         });
         addBook(values);
-        console.error('Received values of form: ', values);
       }
     });
   };
 
-  render() {
+  renderForm = () => {
+    const { addBookInfo } = this.props;
     const { getFieldDecorator } = this.props.form;
+
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -41,8 +38,7 @@ class AddBookView extends React.Component {
     };
 
     return (
-      <div>
-        <PageHeader title="添加书籍" />
+      <Spin spinning={addBookInfo.loading === 'start'}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item label="书名">
             {getFieldDecorator('bookName', {
@@ -80,6 +76,15 @@ class AddBookView extends React.Component {
             </Button>
           </Form.Item>
         </Form>
+      </Spin>
+    );
+  };
+
+  render() {
+    return (
+      <div>
+        <PageHeader title="添加书籍" />
+        {this.renderForm()}
       </div>
     );
   }

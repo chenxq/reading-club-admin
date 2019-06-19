@@ -5,29 +5,28 @@ import {
 } from '../actions/addBookAction';
 
 const initialState = {
-  loading: true,
+  loading: 'init',
   bookInfo: {},
 };
 
 export default function addBookReducer(state = initialState, action) {
-  console.log('reducer', state, action);
-  console.log('action type: ', action.type);
   switch (action.type) {
     case POST_BOOK_START: {
-      return { ...state, loading: true };
+      return { ...state, loading: 'start' };
     }
     case POST_BOOK_SUCCESS: {
       return {
         ...state,
-        ...action.payload,
-        loading: false,
+        bookInfo: action.payload,
+        loading: 'success',
       };
     }
     case POST_BOOK_FAILURE: {
       return {
         ...state,
-        ...action.payload,
-        loading: false,
+        bookInfo: {},
+        error: action.payload,
+        loading: 'failure',
       };
     }
     default:

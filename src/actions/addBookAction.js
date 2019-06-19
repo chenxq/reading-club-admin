@@ -1,4 +1,4 @@
-import postBook from '../services/postBook';
+import postBookService from '../services/postBookService';
 
 export const POST_BOOK = 'POST_BOOK';
 
@@ -8,10 +8,10 @@ const POST_BOOK_FAILURE = 'ADD_POST_BOOK_FAILURE';
 
 export { POST_BOOK_START, POST_BOOK_SUCCESS, POST_BOOK_FAILURE, addBookAction };
 
-function addBookAction(actionType) {
+function addBookAction(actionType, payload) {
   return {
     type: actionType,
-    payload: {},
+    payload,
   };
 }
 
@@ -19,7 +19,7 @@ export default function addBook(data) {
   return async (dispatch) => {
     dispatch(addBookAction(POST_BOOK_START));
     try {
-      const ret = await postBook(data);
+      const ret = await postBookService(data);
       if (!ret) {
         dispatch(addBookAction(POST_BOOK_FAILURE, { msg: 'Something wrong!' }));
         return;

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import bookDetailReducer from './bookDetailReducer';
-import getBookList from '../reducers/bookList';
+import getBookList from './bookListReducer';
 import userReducer from './userReducer';
 import addBookReducer from './addBookReducer';
 

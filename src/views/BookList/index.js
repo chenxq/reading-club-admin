@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import getBookList from '../../actions/getBookList';
-import { Table, Button } from 'antd';
+import getBookListAction from '../../actions/getBookListAction';
+import { Table, Button, Alert, Spin } from 'antd';
 
 class BookList extends React.Component {
   componentDidMount() {
@@ -15,50 +15,68 @@ class BookList extends React.Component {
   };
 
   renderBookList = () => {
-    const {
-      bookList: { bookListArray },
-    } = this.props;
-    return bookListArray;
+    const { bookList } = this.props;
+
+    if (bookList.loading === 'failure') {
+      return (
+        <Alert
+          message={bookList.msg}
+          description={bookList.desc || ''}
+          type="error"
+          showIcon
+        />
+      );
+    } else {
+      const columns = [
+        {
+          title: '图书编号',
+          dataIndex: 'id',
+        },
+        {
+          title: '图书名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '作者',
+          dataIndex: 'author',
+        },
+        {
+          title: '简介',
+          dataIndex: 'description',
+        },
+        {
+          title: '封面',
+          render: (record) => {
+            return (
+              <img
+                src={record.imageUrl}
+                alt="封面"
+                style={{ height: '100px' }}
+              />
+            );
+          },
+        },
+        {
+          title: '操作',
+        },
+      ];
+
+      return (
+        <Spin spinning={bookList.loading === 'start'}>
+          <Table
+            rowKey="id"
+            columns={columns}
+            dataSource={bookList.bookListArray || []}
+          />
+        </Spin>
+      );
+    }
   };
 
   render() {
-    const columns = [
-      {
-        title: '图书编号',
-        dataIndex: 'id',
-      },
-      {
-        title: '图书名称',
-        dataIndex: 'name',
-      },
-      {
-        title: '作者',
-        dataIndex: 'author',
-      },
-      {
-        title: '简介',
-        dataIndex: 'description',
-      },
-      {
-        title: '封面',
-        render: (record) => {
-          return (
-            <img src={record.imageUrl} alt="封面" style={{ height: '100px' }} />
-          );
-        },
-      },
-      {
-        title: '操作',
-      },
-    ];
-
     return (
       <div>
-        <Table
-          rowKey="id"
-          columns={columns}
-          dataSource={this.renderBookList()}
-        />
+        {this.renderBookList()}
         <Button
           type="primary"
           onClick={() => {
@@ -78,7 +96,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getBookList: () => getBookList()(dispatch),
+  getBookList: () => getBookListAction()(dispatch),
 });
 
 export default connect(
