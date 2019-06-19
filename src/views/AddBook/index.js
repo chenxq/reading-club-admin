@@ -1,8 +1,8 @@
-import React from "react";
-import { PageHeader, Input, Button } from 'antd';
-import { connect } from "react-redux";
-import postBook from "../../services/postBook";
-import addBook from "../../actions/addBook";
+import React from 'react';
+import { PageHeader, Input, Button, Form } from 'antd';
+import { connect } from 'react-redux';
+import postBook from '../../services/postBook';
+import addBook from '../../actions/addBook';
 
 const { TextArea } = Input;
 
@@ -11,7 +11,7 @@ class AddBook extends React.Component {
     super();
     this.state = {
       userInput: {
-        ID: 2
+        ID: 2,
       },
     };
   }
@@ -20,29 +20,57 @@ class AddBook extends React.Component {
     this.setState({
       userInput: {
         // ...this.state.userInput,
-        bookName: document.getElementById("bookName").value,
-        author: document.getElementById("author").value,
-        ISBN: document.getElementById("ISBN").value,
-        press: document.getElementById("press").value,
-        price: document.getElementById("price").value,
-        picture: document.getElementById("picture").value,
-        decription: document.getElementById("decription").value,
-        moreLink: document.getElementById("moreLink").value
-      }
+        bookName: document.getElementById('bookName').value,
+        author: document.getElementById('author').value,
+        ISBN: document.getElementById('ISBN').value,
+        press: document.getElementById('press').value,
+        price: document.getElementById('price').value,
+        picture: document.getElementById('picture').value,
+        decription: document.getElementById('decription').value,
+        moreLink: document.getElementById('moreLink').value,
+      },
     });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.error('Received values of form: ', values);
+      }
+    });
+  };
+
   render() {
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <div>
         <PageHeader title="添加书籍" />
-        <div>
-          <p>ID: </p>
-          <p>书名: </p>
-          <Input id="bookName" placeholder="请输入书名" />
-          <p>作者: </p>
-          <Input id="author" placeholder="请输入作者" />
-          <p>ISBN: </p>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Item label="书名">
+            {getFieldDecorator('bookName', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input book name!',
+                  whitespace: true,
+                },
+              ],
+            })(<Input id="bookName" placeholder="请输入书名" />)}
+          </Form.Item>
+          <Form.Item label="作者">
+            {getFieldDecorator('author', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input author name!',
+                  whitespace: true,
+                },
+              ],
+            })(<Input id="author" placeholder="请输入作者" />)}
+          </Form.Item>
+          {/*<p>ISBN: </p>
           <Input id="ISBN" placeholder="请输入ISBN" />
           <p>出版社: </p>
           <Input id="press" placeholder="请输入出版社" />
@@ -56,27 +84,40 @@ class AddBook extends React.Component {
           <Input id="moreLink" placeholder="请输入豆瓣链接" />
         </div>
         <div>
-          <Button href="/home/bookList" type="primary" style={{ marginBottom: 16, marginTop: 16, marginRight: 20 }}>
-            取消
-          </Button>
-          <Button onclick={this.bookInforFromUser()} type="primary" style={{ marginBottom: 16, marginTop: 16 }}>
-            保存
-          </Button>
-        </div>
+          */}
+          <Form.Item>
+            <Button
+              href="/home/bookList"
+              type="primary"
+              style={{ marginBottom: 16, marginTop: 16, marginRight: 20 }}
+            >
+              取消
+            </Button>
+            <Button
+              type="primary"
+              style={{ marginBottom: 16, marginTop: 16 }}
+              htmlType="submit"
+            >
+              保存
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  bookInfor: state.userInput
+const mapStateToProps = (state) => ({
+  bookInfor: state.userInput,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getBookDetail: bookInfor => postBook(bookInfor)(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  getBookDetail: (bookInfor) => postBook(bookInfor)(dispatch),
 });
+
+const AddBookForm = Form.create({ name: 'addbook' })(addBook);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(AddBook);
+  mapDispatchToProps,
+)(AddBookForm);
