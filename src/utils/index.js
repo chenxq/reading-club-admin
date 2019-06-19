@@ -19,6 +19,7 @@ export default class HttpRequest {
     try {
       const ret = await axios.post(requestUrl, JSON.stringify(data));
       console.log('Request result ', ret);
+      return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
     }
