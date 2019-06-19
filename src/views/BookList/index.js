@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
 import { Table, Button } from 'antd';
+import { Link, Route } from 'react-router-dom';
+import AddBook from '../AddBook';
 
 class BookList extends React.Component {
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
-  };
+  }
 
   renderLoadingMessage = () => {
     const { bookList } = this.props;
@@ -15,9 +17,11 @@ class BookList extends React.Component {
   };
 
   renderBookList = () => {
-    const { bookList: { bookListArray } } = this.props;
+    const {
+      bookList: { bookListArray },
+    } = this.props;
     return bookListArray;
-  }
+  };
 
   render() {
     const columns = [
@@ -40,8 +44,8 @@ class BookList extends React.Component {
       {
         title: '封面',
         render: (record) => {
-          return <img src={record.imageUrl} style={{ height: '100px', }} />
-        }
+          return <img src={record.imageUrl} style={{ height: '100px' }} />;
+        },
       },
       {
         title: '操作',
@@ -55,20 +59,30 @@ class BookList extends React.Component {
           columns={columns}
           dataSource={this.renderBookList()}
         />
-        <Button href="/home/addBook" type="primary" style={{ marginBottom: 16 }}>
+        {/*<Button
+          href="/home/booklist/addBook"
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
           添加书籍
         </Button>
+        */}
+        <Link to="/home/booklist/addBook">添加书籍</Link>
+        <Route path="/home/booklist/addBook" component={AddBook} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookList: state.bookList,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getBookList: () => getBookList()(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  getBookList: () => getBookList()(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookList);

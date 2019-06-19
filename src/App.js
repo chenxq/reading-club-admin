@@ -103,7 +103,7 @@ function App() {
             >
               <Route exact path="/home" component={HomePage} />
               <Route path="/home/booklist" component={BookList} />
-              <Route path="/home/addBook" component={AddBook} />
+              <Route path="/home/booklist/addBook" component={AddBook} />
               <Route path="/home/booklist/detail" component={BookDetail} />
               <Route path="/home/userlist" component={UserListContainer} />
               <Route
