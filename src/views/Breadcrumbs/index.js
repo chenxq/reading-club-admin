@@ -6,6 +6,7 @@ const breadcrumbNameMap = {
   '/home': 'Home',
   '/home/booklist': 'Book List',
   '/home/booklist/detail': 'Book Detail',
+  '/home/booklist/addBook': 'Add Book',
   '/home/userlist': 'UserList',
   '/home/userlist/detail': 'User Detail',
   '/home/setings': 'Settings',
