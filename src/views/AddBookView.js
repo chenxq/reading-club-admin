@@ -1,41 +1,27 @@
 import React from 'react';
 import { PageHeader, Input, Button, Form } from 'antd';
 import { connect } from 'react-redux';
-import postBook from '../../services/postBook';
-import addBook from '../../actions/addBook';
+import addBookAction from '../actions/addBookAction';
 
-const { TextArea } = Input;
-
-class AddBook extends React.Component {
+class AddBookView extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      userInput: {
-        ID: 2,
-      },
+      status: 0, // 0: initial, 1: success, 2: failure
+      values: [],
     };
   }
 
-  bookInforFromUser() {
-    this.setState({
-      userInput: {
-        // ...this.state.userInput,
-        bookName: document.getElementById('bookName').value,
-        author: document.getElementById('author').value,
-        ISBN: document.getElementById('ISBN').value,
-        press: document.getElementById('press').value,
-        price: document.getElementById('price').value,
-        picture: document.getElementById('picture').value,
-        decription: document.getElementById('decription').value,
-        moreLink: document.getElementById('moreLink').value,
-      },
-    });
-  }
-
   handleSubmit = (e) => {
+    const { addBook } = this.props;
+
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        this.setState({
+          status: 1,
+        });
+        addBook(values);
         console.error('Received values of form: ', values);
       }
     });
@@ -82,19 +68,15 @@ class AddBook extends React.Component {
           </Form.Item>
 
           <Form.Item>
+            <Button type="primary" style={{ margin: 16 }} htmlType="submit">
+              保存
+            </Button>
             <Button
               href="/home/bookList"
               type="primary"
               style={{ marginBottom: 16, marginTop: 16, marginRight: 20 }}
             >
               取消
-            </Button>
-            <Button
-              type="primary"
-              style={{ marginBottom: 16, marginTop: 16 }}
-              htmlType="submit"
-            >
-              保存
             </Button>
           </Form.Item>
         </Form>
@@ -121,14 +103,14 @@ class AddBook extends React.Component {
 */
 
 const mapStateToProps = (state) => ({
-  bookInfor: state.userInput,
+  addBookInfo: state.addBook,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getBookDetail: (bookInfor) => postBook(bookInfor)(dispatch),
+  addBook: (bookInfo) => addBookAction(bookInfo)(dispatch),
 });
 
-const AddBookForm = Form.create({ name: 'addbook' })(AddBook);
+const AddBookForm = Form.create({ name: 'addbook' })(AddBookView);
 
 export default connect(
   mapStateToProps,

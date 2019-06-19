@@ -1,29 +1,33 @@
-import { FAILURE_REQUEST, START_REQUEST, SUCCESS_REQUEST } from '../actions/getBookList';
+import {
+  POST_BOOK_START,
+  POST_BOOK_SUCCESS,
+  POST_BOOK_FAILURE,
+} from '../actions/addBookAction';
 
 const initialState = {
   loading: true,
-  bookListArray: []
+  bookInfo: {},
 };
 
-export default function getBookList(state = initialState, action) {
+export default function addBookReducer(state = initialState, action) {
   console.log('reducer', state, action);
   console.log('action type: ', action.type);
   switch (action.type) {
-    case START_REQUEST: {
+    case POST_BOOK_START: {
       return { ...state, loading: true };
     }
-    case SUCCESS_REQUEST: {
+    case POST_BOOK_SUCCESS: {
       return {
         ...state,
         ...action.payload,
-        loading: false
+        loading: false,
       };
     }
-    case FAILURE_REQUEST: {
+    case POST_BOOK_FAILURE: {
       return {
         ...state,
         ...action.payload,
-        loading: false
+        loading: false,
       };
     }
     default:

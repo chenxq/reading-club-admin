@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
 import { Table, Button } from 'antd';
-import { Link, Route, Redirect } from 'react-router-dom';
-import AddBook from '../AddBook';
 
 class BookList extends React.Component {
   componentDidMount() {

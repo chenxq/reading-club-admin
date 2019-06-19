@@ -5,7 +5,7 @@ import HomePage from './views/Home';
 
 import './App.css';
 import BookList from './views/BookList';
-import AddBook from './views/AddBook';
+import AddBookView from './views/AddBookView';
 import BookDetail from './views/BookDetail';
 import UserListContainer from './views/UserList';
 import Breadcrumbs from './views/Breadcrumbs';
@@ -107,7 +107,7 @@ function App() {
                 <Route
                   path="/home/booklist/addBook"
                   render={(props) => {
-                    return <AddBook {...props} />;
+                    return <AddBookView {...props} />;
                   }}
                 />
                 <Route
