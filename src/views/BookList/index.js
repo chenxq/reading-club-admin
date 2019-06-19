@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import getBookList from '../../actions/getBookList';
 import { Table, Button } from 'antd';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import AddBook from '../AddBook';
 
 class BookList extends React.Component {
@@ -44,7 +44,9 @@ class BookList extends React.Component {
       {
         title: '封面',
         render: (record) => {
-          return <img src={record.imageUrl} style={{ height: '100px' }} />;
+          return (
+            <img src={record.imageUrl} alt="封面" style={{ height: '100px' }} />
+          );
         },
       },
       {
@@ -59,16 +61,15 @@ class BookList extends React.Component {
           columns={columns}
           dataSource={this.renderBookList()}
         />
-        {/*<Button
-          href="/home/booklist/addBook"
+        <Button
           type="primary"
-          style={{ marginBottom: 16 }}
+          onClick={() => {
+            const { history } = this.props;
+            history.push('/home/booklist/addBook');
+          }}
         >
           添加书籍
         </Button>
-        */}
-        <Link to="/home/booklist/addBook">添加书籍</Link>
-        <Route path="/home/booklist/addBook" component={AddBook} />
       </div>
     );
   }

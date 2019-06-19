@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu, Icon, Row, Col, Button } from 'antd';
 import HomePage from './views/Home';
 
@@ -101,15 +101,26 @@ function App() {
                 minHeight: 600,
               }}
             >
-              <Route exact path="/home" component={HomePage} />
-              <Route path="/home/booklist" component={BookList} />
-              <Route path="/home/booklist/addBook" component={AddBook} />
-              <Route path="/home/booklist/detail" component={BookDetail} />
-              <Route path="/home/userlist" component={UserListContainer} />
-              <Route
-                path="/home/userlist/detail"
-                component={UserListContainer}
-              />
+              <Switch>
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/home/booklist" component={BookList} />
+                <Route
+                  path="/home/booklist/addBook"
+                  render={(props) => {
+                    return <AddBook {...props} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/home/booklist/detail"
+                  component={BookDetail}
+                />
+                <Route path="/home/userlist" component={UserListContainer} />
+                <Route
+                  path="/home/userlist/detail"
+                  component={UserListContainer}
+                />
+              </Switch>
             </Content>
           </Layout>
         </Layout>
