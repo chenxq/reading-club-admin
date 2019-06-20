@@ -1,9 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getBookListAction from '../../actions/getBookListAction';
-import { Table, Button, Alert, Spin } from 'antd';
+import { Table, Button, Spin, Alert } from 'antd';
+import DeleteModal from '../../components/DeleteModal';
 
 class BookList extends React.Component {
+  constructor(props) {
+    super();
+  }
+
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
@@ -13,6 +18,16 @@ class BookList extends React.Component {
     const { bookList } = this.props;
     return bookList.loading;
   };
+
+  renderDeleteModal(bookID) {
+    console.log('delete button click');
+    console.log('book ID: ', bookID);
+    return (
+      <DeleteModal
+        bookID={bookID}
+        visible={true}
+      />);
+  }
 
   renderBookList = () => {
     const { bookList } = this.props;
@@ -58,6 +73,17 @@ class BookList extends React.Component {
         },
         {
           title: '操作',
+          render: (record) => {
+            return (
+              <Button
+                id={record.id}
+                type="primary"
+                onClick={() => { this.renderDeleteModal(record.id) }}
+              >
+                删除
+              </Button>
+            );
+          },
         },
       ];
 
