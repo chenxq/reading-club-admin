@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import getBookListAction from '../../actions/getBookListAction';
 import deleteBookAction from '../../actions/deleteBookAction';
-import { Table, Button, Spin, Alert, Modal } from 'antd';
-// import DeleteModal from '../../components/DeleteModal';
+import { Table, Button, Spin, Alert } from 'antd';
+import DeleteModal from '../../components/DeleteModal';
 
 class BookList extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class BookList extends React.Component {
     this.state = {
       bookID: 0,
       visible: false,
-    }
+    };
   }
 
   componentDidMount() {
@@ -26,9 +26,9 @@ class BookList extends React.Component {
   };
 
   deleteBook = () => {
-    this.setState({
-      visible: false,
-    });
+    const { deleteBook } = this.props;
+    const { bookID } = this.state;
+    deleteBook && deleteBook(bookID);
   };
 
   hideModal = () => {
@@ -42,21 +42,11 @@ class BookList extends React.Component {
     return bookList.loading;
   };
 
-  // renderDeleteModal() {
-  //   console.log('delete button click');
-  //   // console.log('book ID: ', id);
-  //   return (
-  //     <DeleteModal
-  //       bookID={this.state.bookID}
-  //       visible={this.state.visible}
-  //     />);
-  // }
-
-  changeDeleteModalState(id) {
+  handleDelete(id) {
     this.setState({
       bookID: id,
-      visible: true
-    })
+      visible: true,
+    });
   }
 
   renderBookList = () => {
@@ -108,7 +98,9 @@ class BookList extends React.Component {
               <Button
                 id={record.id}
                 type="primary"
-                onClick={() => { this.changeDeleteModalState(record.id) }}
+                onClick={() => {
+                  this.handleDelete(record.id);
+                }}
               >
                 删除
               </Button>
@@ -130,6 +122,8 @@ class BookList extends React.Component {
   };
 
   render() {
+    const { bookID, visible } = this.state;
+
     return (
       <div>
         {this.renderBookList()}
@@ -142,17 +136,17 @@ class BookList extends React.Component {
         >
           添加书籍
         </Button>
-        <Modal
-          id={this.state.bookID}
+        <DeleteModal
+          bookID={bookID}
           title="Modal"
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.deleteBook}
           onCancel={this.hideModal}
           okText="确认"
           cancelText="取消"
         >
           <p>确定删除该书籍吗？`${this.state.bookID}`</p>
-        </Modal>
+        </DeleteModal>
       </div>
     );
   }
@@ -160,7 +154,7 @@ class BookList extends React.Component {
 
 const mapStateToProps = (state) => ({
   bookList: state.bookList,
-  bookID: state.bookID
+  bookID: state.bookID,
 });
 
 const mapDispatchToProps = (dispatch) => ({
