@@ -7,6 +7,7 @@ import deleteBookAction, {
 } from '../../actions/deleteBookAction';
 import { Table, Button, Spin, Alert, Modal } from 'antd';
 import DeleteModal from '../../components/DeleteModal';
+import executeBorrow from '../../actions/borrowAction';
 
 class BookList extends React.Component {
   constructor(props) {
@@ -20,6 +21,20 @@ class BookList extends React.Component {
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
+  }
+
+  showBorrowOpResult(result, titleStr, contentStr) {
+    if (result === 1) {
+      Modal.success({
+        title: `${titleStr} [${contentStr.msg.name}]`,
+        maskClosable: true,
+      });
+    } else if (result === 0) {
+      Modal.error({
+        title: `${titleStr} [${contentStr.msg.msg}]`,
+        maskClosable: true,
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -73,6 +88,12 @@ class BookList extends React.Component {
     });
   }
 
+  //borrow event
+  handleBorrowClick(bookid) {
+    const { borrowBook } = this.props;
+    borrowBook && borrowBook('joe', bookid);
+  }
+
   renderBookList = () => {
     const { bookList } = this.props;
 
@@ -120,15 +141,26 @@ class BookList extends React.Component {
           render: (record) => {
             console.log('===>Button record', record);
             return (
-              <Button
-                id={record.id}
-                type="primary"
-                onClick={() => {
-                  this.handleDelete(record);
-                }}
-              >
-                删除
-              </Button>
+              <div>
+                <Button
+                  id={record.id}
+                  type="primary"
+                  onClick={() => {
+                    this.handleDelete(record);
+                  }}
+                >
+                  删除
+                </Button>
+                <Button
+                  type="primary"
+                  style={{ marginTop: '5px' }}
+                  onClick={(e) => {
+                    this.handleBorrowClick(record.id);
+                  }}
+                >
+                  借阅
+                </Button>
+              </div>
             );
           },
         },
@@ -148,6 +180,7 @@ class BookList extends React.Component {
 
   render() {
     const { bookInfo, visible } = this.state;
+    const { borrow } = this.props;
 
     return (
       <div>
@@ -172,6 +205,11 @@ class BookList extends React.Component {
         >
           <p>确定删除该书籍吗？`${this.state.bookID}`</p>
         </DeleteModal>
+        {borrow.loading === 'success'
+          ? this.showBorrowOpResult(1, '借阅成功', borrow)
+          : borrow.loading === 'failed'
+          ? this.showBorrowOpResult(0, '借阅失败', borrow)
+          : null}
       </div>
     );
   }
@@ -180,12 +218,14 @@ class BookList extends React.Component {
 const mapStateToProps = (state) => ({
   bookList: state.bookList,
   deleteStatus: state.deleteBookInfo,
+  borrow: state.borrowStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getBookList: () => getBookListAction()(dispatch),
   deleteBook: (bookID) => deleteBookAction(bookID)(dispatch),
   resetDeleteStatus: () => dispatch(resetDeleteStatus()),
+  borrowBook: (username, bookid) => executeBorrow(username, bookid)(dispatch),
 });
 
 export default connect(

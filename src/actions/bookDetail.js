@@ -1,7 +1,7 @@
-import fetchBookDetail from '../services/bookDetail'
-const START_REQUEST = "START_REQUEST";
-const SUCCESS_REQUEST = "SUCCESS_REQUEST";
-const FAILURE_REQUEST = "FAILURE_REQUEST";
+import fetchBookDetail from '../services/bookDetail';
+const START_REQUEST = 'START_BOOK_DETAIL_REQUEST';
+const SUCCESS_REQUEST = 'SUCCESS_BOOK_DETAIL_REQUEST';
+const FAILURE_REQUEST = 'FAILURE_BOOK_DETAIL_REQUEST';
 
 export { START_REQUEST, SUCCESS_REQUEST, FAILURE_REQUEST };
 
@@ -16,12 +16,12 @@ export default function requesBookDetail(bookID) {
     try {
       const ret = await fetchBookDetail(bookID);
       if (!ret) {
-        dispatch(action(FAILURE_REQUEST, { msg: "Something wrong!" }));
+        dispatch(action(FAILURE_REQUEST, { msg: 'Something wrong!' }));
         return;
       }
       dispatch(action(SUCCESS_REQUEST, { ret }));
     } catch (e) {
-      dispatch(action(FAILURE_REQUEST, { msg: "Something wrong!" }));
+      dispatch(action(FAILURE_REQUEST, { msg: 'Something wrong!' }));
       return;
     }
   };
