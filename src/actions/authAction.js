@@ -26,12 +26,13 @@ export default function auth(authInfo) {
         dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
         return;
       }
-      const { token } = ret.token;
+      const { token } = ret;
+      console.log(token);
       localStorage.setItem('jwToken', token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-
       dispatch(authAction(AUTH_SUCCESS, ret));
+      dispatch(setCurrentUser(decoded));
     } catch (e) {
       dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
       return;
