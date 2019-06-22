@@ -14,14 +14,13 @@ export default class HttpRequest {
    * @param {*} data
    */
   static async postService(path, data = {}) {
-    const requestUrl = HttpRequest._getRequestUrl(path);
-
     try {
-      const ret = await axios.post(requestUrl, JSON.stringify(data));
+      const ret = await axios.generalService(path, 'POST', data);
       console.log('Request result ', ret);
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
     }
   }
 
@@ -37,6 +36,7 @@ export default class HttpRequest {
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
     }
   }
 
@@ -54,13 +54,14 @@ export default class HttpRequest {
         headers: {
           'Content-Type': 'application/json',
         },
-        params: data,
-        data,
+        params: (method || 'get').toLowerCase === 'get' ? data : null,
+        data: JSON.stringify(data || {}),
       });
 
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
     }
   }
 }
