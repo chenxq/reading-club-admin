@@ -16,7 +16,6 @@ export default class HttpRequest {
   static async postService(path, data = {}) {
     try {
       const ret = await axios.generalService(path, 'POST', data);
-      console.log('Request result ', ret);
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
