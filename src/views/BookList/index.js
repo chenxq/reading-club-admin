@@ -26,9 +26,17 @@ class BookList extends React.Component {
     const path = 'deleteStatus.loading';
     const prevLoading = get(prevProps, path, undefined);
     const loading = get(this.props, path, undefined);
+
     if (prevLoading && prevLoading !== loading && loading === 'failure') {
       Modal.warning({
         title: '删除书籍出错，请稍后再试！',
+        maskClosable: true,
+      });
+    }
+
+    if (prevLoading && prevLoading !== loading && loading === 'success') {
+      Modal.success({
+        title: '成功删除！',
         maskClosable: true,
       });
     }
