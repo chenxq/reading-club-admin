@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { get } from 'lodash';
 import getBookListAction from '../../actions/getBookListAction';
-import deleteBookAction from '../../actions/deleteBookAction';
-import { Table, Button, Spin, Alert } from 'antd';
+import deleteBookAction, {
+  resetDeleteStatus,
+} from '../../actions/deleteBookAction';
+import { Table, Button, Spin, Alert, Modal } from 'antd';
 import DeleteModal from '../../components/DeleteModal';
 
 class BookList extends React.Component {
@@ -19,6 +22,18 @@ class BookList extends React.Component {
     getBookList && getBookList();
   }
 
+  componentDidUpdate(prevProps) {
+    const path = 'deleteStatus.loading';
+    const prevLoading = get(prevProps, path, undefined);
+    const loading = get(this.props, path, undefined);
+    if (prevLoading && prevLoading !== loading && loading === 'failure') {
+      Modal.warning({
+        title: '删除书籍出错，请稍后再试！',
+        maskClosable: true,
+      });
+    }
+  }
+
   showModal = () => {
     this.setState({
       visible: true,
@@ -27,8 +42,9 @@ class BookList extends React.Component {
 
   deleteBook = () => {
     const { deleteBook } = this.props;
-    const { bookID } = this.state;
-    deleteBook && deleteBook(bookID);
+    const { bookInfo } = this.state;
+    this.setState({ visible: false });
+    deleteBook && deleteBook(bookInfo && bookInfo.id);
   };
 
   hideModal = () => {
@@ -42,9 +58,9 @@ class BookList extends React.Component {
     return bookList.loading;
   };
 
-  handleDelete(id) {
+  handleDelete(bookInfo) {
     this.setState({
-      bookID: id,
+      bookInfo,
       visible: true,
     });
   }
@@ -94,12 +110,13 @@ class BookList extends React.Component {
         {
           title: '操作',
           render: (record) => {
+            console.log('===>Button record', record);
             return (
               <Button
                 id={record.id}
                 type="primary"
                 onClick={() => {
-                  this.handleDelete(record.id);
+                  this.handleDelete(record);
                 }}
               >
                 删除
@@ -122,7 +139,7 @@ class BookList extends React.Component {
   };
 
   render() {
-    const { bookID, visible } = this.state;
+    const { bookInfo, visible } = this.state;
 
     return (
       <div>
@@ -137,7 +154,7 @@ class BookList extends React.Component {
           添加书籍
         </Button>
         <DeleteModal
-          bookID={bookID}
+          bookInfo={bookInfo}
           title="Modal"
           visible={visible}
           onOk={this.deleteBook}
@@ -154,12 +171,13 @@ class BookList extends React.Component {
 
 const mapStateToProps = (state) => ({
   bookList: state.bookList,
-  bookID: state.bookID,
+  deleteStatus: state.deleteBookInfo,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getBookList: () => getBookListAction()(dispatch),
   deleteBook: (bookID) => deleteBookAction(bookID)(dispatch),
+  resetDeleteStatus: () => dispatch(resetDeleteStatus()),
 });
 
 export default connect(

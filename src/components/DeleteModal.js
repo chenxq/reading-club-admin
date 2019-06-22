@@ -1,28 +1,27 @@
 import React from 'react';
 import { Modal } from 'antd';
-import deleteBookAction from '../actions/deleteBookAction';
 
 export default class DeleteModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: props.visible,
-      bookID: props.bookID,
+      visible: false,
+      bookInfo: undefined,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.visible !== nextProps.visible) {
-      this.setState({ visible: nextProps.visible });
+      const { visible, bookInfo } = nextProps;
+      this.setState({ visible, bookInfo });
     }
   }
 
   render() {
     const { onOk, onCancel } = this.props;
-    const { bookID, visible } = this.state;
+    const { visible, bookInfo } = this.state;
     return (
       <Modal
-        id={bookID}
         title="Modal"
         visible={visible}
         onOk={onOk}
@@ -30,7 +29,7 @@ export default class DeleteModal extends React.Component {
         okText="确认"
         cancelText="取消"
       >
-        <p>{`确定删除该书籍吗？${this.state.bookID}`}</p>
+        <p>{`确定删除该书籍吗？${bookInfo && bookInfo.name}`}</p>
       </Modal>
     );
   }

@@ -2,12 +2,12 @@ import {
   DELETE_BOOK_START,
   DELETE_BOOK_SUCCESS,
   DELETE_BOOK_FAILURE,
+  DELETE_BOOK_RESET,
 } from '../actions/deleteBookAction';
 
 const initialState = {
   loading: 'init',
-  bookID: 0
-  // bookInfo: {},
+  bookInfo: {},
 };
 
 export default function deleteBookReducer(state = initialState, action) {
@@ -28,6 +28,12 @@ export default function deleteBookReducer(state = initialState, action) {
         bookID: 0,
         error: action.payload,
         loading: 'failure',
+      };
+    }
+    case DELETE_BOOK_RESET: {
+      return {
+        ...state,
+        loading: 'init',
       };
     }
     default:
