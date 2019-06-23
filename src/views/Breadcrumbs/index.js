@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 
 const breadcrumbNameMap = {
