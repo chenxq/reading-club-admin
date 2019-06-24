@@ -1,27 +1,38 @@
-///src/redux/reducers.js
-export default store;
+import {
+  RETURN_START_REQUEST,
+  RETURN_SUCCESS_REQUEST,
+  RETURN_FAILURE_REQUEST,
+} from '../actions/returnBook';
 
-const defaultState={
-    inputValue:'',
-    list:[1,2]
-}
+const initialState = {
+  loading: 'init',
+  msg: '未知原因',
+};
 
-export default(state=defaultState,action)=>{
-    if(action.type==='change_input_value'){
-        const newState=JSON.parse(JSON.stringify(state))
-        newState.inputValue=action.inputValue;
-        return newState;
+export default function returnBookReducer(state = initialState, action) {
+  switch (action.type) {
+    case RETURN_START_REQUEST: {
+      return {
+        ...state,
+        msg: action.payload,
+        loading: 'start',
+      };
     }
-    if(action.type==='send_message'){
-        const newState=JSON.parse(JSON.stringify(state))
-        newState.list.push(newState.inputValue);
-        newState.inputValue='';
-        return newState;
+    case RETURN_SUCCESS_REQUEST: {
+      return {
+        ...state,
+        msg: action.payload.msg,
+        loading: 'success',
+      };
     }
-    if(action.type==='delete_message'){
-        const newState=Object.assign({},state);
-        newState.list.splice(action.index,1);
-        return newState;
+    case RETURN_FAILURE_REQUEST: {
+      return {
+        ...state,
+        msg: action.payload.msg,
+        loading: 'failed',
+      };
     }
-    return state;
+    default:
+      return state;
+  }
 }

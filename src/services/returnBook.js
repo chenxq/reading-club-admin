@@ -1,14 +1,16 @@
+import HttpRequest from '../utils';
+import * as _ from 'lodash';
 
-
-
-
-export default async function returnBook(bookID) {
-  const url=`${SERVER_URL}${bookID}`
+export default async function returnBook(username, bookID) {
   try {
-    const ret = await axios.get(url, {
+    console.log('图书编号:' + bookID);
+    const res = await HttpRequest.postService('/book/return', {
+      username: username,
+      bookID: bookID,
     });
-    return ret;
+    console.log('还书返回值:' + res);
+    return _.get(res, 'data', null);
   } catch (error) {
-    return null;
+    return '还书失败,该书未被借阅';
   }
 }
