@@ -1,13 +1,13 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Button } from "antd";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Button } from 'antd';
 
 class HomePage extends React.Component {
   render() {
     return (
       <div>
         Home Page
-        <Button>default button</Button>
+        <Button type="primary">Login</Button>
       </div>
     );
   }
