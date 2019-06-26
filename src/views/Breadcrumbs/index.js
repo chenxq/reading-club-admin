@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 
 const breadcrumbNameMap = {
   '/home': 'Home',
   '/home/booklist': 'Book List',
   '/home/booklist/detail': 'Book Detail',
+  '/home/booklist/addBook': 'Add Book',
   '/home/userlist': 'UserList',
   '/home/userlist/detail': 'User Detail',
   '/home/setings': 'Settings',

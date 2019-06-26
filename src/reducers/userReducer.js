@@ -1,8 +1,8 @@
 import {
-  FAILURE_REQUEST,
-  START_REQUEST,
-  SUCCESS_REQUEST,
-} from '../actions/userAction';
+  USER_LIST_START_REQUEST,
+  USER_LIST_SUCCESS_REQUEST,
+  USER_LIST_FAILURE_REQUEST,
+} from '../actions/getUserListAction';
 
 const initialState = {
   loading: true,
@@ -10,25 +10,29 @@ const initialState = {
 };
 
 export default function userReducer(state = initialState, action) {
+  console.log('reducer', state, action);
+  console.log('action type: ', action.type);
   switch (action.type) {
-    case START_REQUEST: {
+    case USER_LIST_START_REQUEST: {
       return { ...state, loading: true };
     }
-    case SUCCESS_REQUEST: {
+    case USER_LIST_SUCCESS_REQUEST: {
       return {
         ...state,
-        ...action.payload,
+        userListArray: action.payload.message || [],
+        msg: null,
         loading: false,
       };
     }
-    case FAILURE_REQUEST: {
+    case USER_LIST_FAILURE_REQUEST: {
       return {
         ...state,
-        ...action.payload,
+        userListArray: action.payload.message || [],
+        msg: null,
         loading: false,
       };
     }
     default:
-      return initialState;
+      return state;
   }
 }

@@ -1,32 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import getUserList from '../../actions/userAction';
+import getUserListAction from '../../actions/getUserListAction';
 
 import { Table } from 'antd';
 
 class UserList extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      loading: props.response.loading,
-      userList: props.response.userListArray,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      loading: nextProps.response.loading,
-      userList: nextProps.response.userListArray,
-    });
-  }
-
   componentDidMount() {
     const { getUserList } = this.props;
     getUserList && getUserList();
   }
 
-  render() {
-    const { loading, userList } = this.state;
+  renderLoadingMessage = () => {
+    const { userList } = this.props;
+    return userList.loading;
+  };
+
+  renderUserList = () => {
+    const { userList } = this.props;
+
     const columns = [
       {
         title: '用户编号',
@@ -34,11 +25,11 @@ class UserList extends React.Component {
       },
       {
         title: '姓名',
-        dataIndex: 'Username',
+        dataIndex: 'username',
       },
       {
         title: 'Email',
-        dataIndex: 'Email',
+        dataIndex: 'email',
       },
       {
         title: '操作',
@@ -50,20 +41,24 @@ class UserList extends React.Component {
         <Table
           rowKey="id"
           columns={columns}
-          dataSource={userList}
-          loading={loading}
+          dataSource={userList.userListArray || []}
+          loading={userList.loading}
         />
       </div>
     );
+  };
+
+  render() {
+    return <div>{this.renderUserList()}</div>;
   }
 }
 
 const mapStateToProps = (state) => ({
-  response: state.userresponse,
+  userList: state.userList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserList: () => getUserList()(dispatch),
+  getUserList: () => getUserListAction()(dispatch),
 });
 
 export default connect(
