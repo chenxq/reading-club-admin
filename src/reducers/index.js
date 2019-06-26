@@ -4,6 +4,7 @@ import getBookList from './bookListReducer';
 import getUserListReducer from './userReducer';
 import addBookReducer from './addBookReducer';
 import deleteBookReducer from './deleteBookReducer';
+import authReducer from './authReducer';
 
 export default combineReducers({
   bookDetail: bookDetailReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   userList: getUserListReducer,
   addBook: addBookReducer,
   deleteBookInfo: deleteBookReducer,
+  auth: authReducer,
 });

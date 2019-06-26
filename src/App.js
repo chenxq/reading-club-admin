@@ -9,9 +9,36 @@ import AddBookView from './views/AddBookView';
 import BookDetail from './views/BookDetail';
 import UserListContainer from './views/UserList';
 import Breadcrumbs from './views/Breadcrumbs';
+import { setCurrentUser, logoutUser } from './actions/authAction';
+import store from './store';
+import setAuthToken from './utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
+
+if (localStorage.jwToken) {
+  setAuthToken(localStorage.jwToken);
+  // 解析token
+  const decoded = jwt_decode(localStorage.jwToken);
+  store.dispatch(setCurrentUser(decoded));
+  // 检测token过期
+  // 获取当前时间
+  const currentTime = Date.now() / 1000; //由毫秒转成秒
+  console.log(decoded);
+  console.log(currentTime);
+  // 判断当前时间是否大于token中的exp时间;如果大于是为过期
+  if (decoded.exp < currentTime) {
+    // 过期
+    store.dispatch(logoutUser());
+    // 清除本地存储
+
+    // 退出后再跳转页面
+    //window.location.href('/');
+    const { history } = this.props;
+    history.push('/');
+  }
+}
 
 function App() {
   return (
