@@ -29,14 +29,10 @@ if (localStorage.jwToken) {
   console.log(currentTime);
   // 判断当前时间是否大于token中的exp时间;如果大于是为过期
   if (decoded.exp < currentTime) {
-    // 过期
-    store.dispatch(logoutUser());
     // 清除本地存储
-
+    store.dispatch(logoutUser());
     // 退出后再跳转页面
-    //window.location.href('/');
-    const { history } = this.props;
-    history.push('/');
+    window.location.href = '/';
   }
 }
 
@@ -59,12 +55,15 @@ function App() {
                 </Col>
                 <Col span={8}>
                   <Row type="flex" justify="end" align="middle">
-                    <Button type="primary">
-                      Login
-                      <Icon type="login" />
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        store.dispatch(logoutUser());
+                        window.location.href = '/';
+                      }}
+                    >
+                      Logout
                     </Button>
-                    <div style={{ width: '20px' }} />>
-                    <Button type="link">Logout</Button>
                   </Row>
                 </Col>
               </Row>

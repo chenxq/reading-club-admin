@@ -28,7 +28,8 @@ export default function auth(authInfo) {
       }
       const { token } = ret;
       localStorage.setItem('jwToken', token);
-      //setAuthToken(token);
+      //设置axios的headers token
+      setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(authAction(AUTH_SUCCESS, ret));
       dispatch(setCurrentUser(decoded));
@@ -51,11 +52,6 @@ export const setCurrentUser = (decoded) => {
 export const logoutUser = () => (dispatch) => {
   // 移除本地存储信息
   localStorage.removeItem('jwToken');
-  /**
-   * / 移除在util文件中
-   * token头部加入的
-   * axios.defaults.headers.common['Authorization'] = token ;
-   *  */
   setAuthToken(false);
   // 分发到reducer中,传空对象后传入reducer就是空对象
   dispatch(setCurrentUser({}));
