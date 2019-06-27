@@ -13,7 +13,7 @@ import { setCurrentUser, logoutUser } from './actions/authAction';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-
+import { connect } from 'react-redux';
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -37,6 +37,13 @@ if (localStorage.jwToken) {
 }
 
 function App() {
+  if (!localStorage.jwToken) {
+    return (
+      <Router>
+        <Route path="/" component={HomePage} />
+      </Router>
+    );
+  }
   return (
     <Router>
       <Route exact path="/" component={HomePage} />
@@ -164,4 +171,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  loginInfo: state.auth,
+});
+
+export default connect(mapStateToProps)(App);
