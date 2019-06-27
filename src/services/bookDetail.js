@@ -1,13 +1,11 @@
-import axios from 'axios';
-
-const SERVER_URL = 'https://reading-club-backend.herokuapp.com/book/detail/';
+import HttpRequest from '../utils';
 
 export default async function fetchBookDetail(bookID) {
-  const url = `${SERVER_URL}${bookID}`;
   try {
-    const ret = await axios.get(url, {});
+    const ret = await HttpRequest.getService('/book/detail', { bookID });
     return ret;
   } catch (error) {
     return null;
   }
 }
+
