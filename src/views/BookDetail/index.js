@@ -1,23 +1,23 @@
-import React from "react";
-import { connect } from "react-redux";
-import requesBookDetail from "../../actions/bookDetail";
+import React from 'react';
+import { connect } from 'react-redux';
+import requesBookDetail from '../../actions/bookDetail';
 
-import BookDetailPanel from "../../components/BookDetailPanel";
-import MoreLink from "../../components/MoreLink";
+import BookDetailPanel from '../../components/BookDetailPanel';
+import MoreLink from '../../components/MoreLink';
 
 class BookDetail extends React.Component {
   displayStatus = () => {
     const { res } = this.props;
 
     const { loading, msg, ret } = res;
-    if (loading === "init") {
-      return "init";
-    } else if (loading === "done") {
-      return ret.data.message;
-    } else if (loading === "failure") {
+    if (loading === 'init') {
+      return 'init';
+    } else if (loading === 'done') {
+      return ret.data;
+    } else if (loading === 'failure') {
       return `failed message: ${msg}`;
     } else {
-      return "loading";
+      return 'loading';
     }
   };
 
@@ -32,34 +32,35 @@ class BookDetail extends React.Component {
 
   componentDidMount() {
     const { getBookDetail } = this.props;
-    getBookDetail && getBookDetail(1);
-    // const bookID=this.props;
-    // getBookDetail && getBookDetail(bookID);
+    const bookID = this.props;
+    getBookDetail && getBookDetail(bookID);
   }
 
   render() {
     const message = this.displayStatus();
     return (
       <div>
-        {
-          !message ? <div>Loading...</div> : <BookDetailPanel message={message} />
-        }
-        <MoreLink linkUrl={message.douban_url} />
+        {!message ? (
+          <div>Loading...</div>
+        ) : (
+          <BookDetailPanel message={message} />
+        )}
+        <MoreLink linkUrl={message.doubanUrl} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  res: state.bookDetail
+const mapStateToProps = (state) => ({
+  res: state.bookDetail,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // getBookDetail: (bookId) => getBookDetail(bookId)(dispatch),
-  getBookDetail: bookID => requesBookDetail(bookID)(dispatch)
+  getBookDetail: (bookID) => requesBookDetail(bookID)(dispatch),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(BookDetail);
