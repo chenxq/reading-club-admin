@@ -14,7 +14,7 @@ class AuthView extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { auth, dispatch } = this.props;
+    const { dispatch } = this.props;
 
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -27,7 +27,6 @@ class AuthView extends React.Component {
             dispatch(authAction(values));
           },
         );
-        auth(values);
       }
     });
   };

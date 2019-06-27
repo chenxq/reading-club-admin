@@ -8,6 +8,7 @@ export default async function authService({ userName, password }) {
       password: password,
     });
     console.log('loginInfo:' + ret);
+    localStorage.setItem('userName', userName);
     return _.get(ret, 'data', null);
   } catch (error) {
     console.error('Login fail error', error);

@@ -23,8 +23,9 @@ export default function auth(authInfo) {
         dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
         return;
       }
-      const { token } = ret;
+      const { token, role } = ret;
       localStorage.setItem('jwToken', token);
+      localStorage.setItem('role', role)
       //设置axios的headers token
       setAuthToken(token);
       dispatch(authAction(AUTH_SUCCESS, ret));
@@ -37,6 +38,8 @@ export default function auth(authInfo) {
 
 export const logoutUserAction = () => (dispatch) => {
   localStorage.removeItem('jwToken');
+  localStorage.removeItem('role');
+  localStorage.removeItem('userName');
   setAuthToken(false);
   dispatch(authAction(AUTH_SUCCESS, {}));
 };
