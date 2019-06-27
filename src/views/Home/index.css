@@ -1,0 +1,28 @@
+
+.form{
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  margin: -160px 0 0 -160px;
+  width: 400px;
+  height: 320px;
+  padding: 36px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+}
+.login-form {
+  max-width: 320px;
+}
+.ogin-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+.logo{
+  vertical-align: text-bottom;
+  font-size: 42px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: #1890ff;
+}
