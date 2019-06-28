@@ -39,6 +39,7 @@ class BookList extends React.Component {
         title: '成功删除！',
         maskClosable: true,
       });
+      this.props.dispatch(getBookListAction());
     }
   }
 
@@ -186,6 +187,7 @@ const mapDispatchToProps = (dispatch) => ({
   getBookList: () => getBookListAction()(dispatch),
   deleteBook: (bookID) => deleteBookAction(bookID)(dispatch),
   resetDeleteStatus: () => dispatch(resetDeleteStatus()),
+  dispatch,
 });
 
 export default connect(
