@@ -21,7 +21,6 @@ class BookList extends React.Component {
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
-    // this.handleBorrowAfter();
   }
 
   showBorrowOpResult(result, titleStr, contentStr) {
@@ -204,7 +203,7 @@ class BookList extends React.Component {
           okText="确认"
           cancelText="取消"
         >
-          <p>`确定删除该书籍吗？${this.state.bookID}`</p>
+          <p>确定删除该书籍吗？`${this.state.bookID}`</p>
         </DeleteModal>
         {borrow.loading === 'success'
           ? this.showBorrowOpResult(1, '借阅成功', borrow)
