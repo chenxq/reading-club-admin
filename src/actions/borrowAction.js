@@ -23,14 +23,14 @@ export default function executeBorrow(username, bookid) {
       if (!res) {
         dispatch(
           borrowAction(BORROW_FAILURE_REQUEST, {
-            msg: 'API response: Borrowing books failed',
+            msg: '该书已被借阅',
           }),
         );
         return;
       }
       dispatch(borrowAction(BORROW_SUCCESS_REQUEST, res));
     } catch (e) {
-      dispatch(borrowAction(BORROW_FAILURE_REQUEST, { msg: 'code error!' }));
+      dispatch(borrowAction(BORROW_FAILURE_REQUEST, { msg: '借书系统错误' }));
       return;
     }
   };

@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   loading: 'init',
+  msg: 'init',
 };
 
 export default function borrowReducer(state = initialState, action) {
@@ -13,22 +14,22 @@ export default function borrowReducer(state = initialState, action) {
     case BORROW_START_REQUEST: {
       return {
         ...state,
+        loading: 'init',
         msg: action.payload,
-        loading: 'start',
       };
     }
     case BORROW_SUCCESS_REQUEST: {
       return {
         ...state,
-        ...action.payload,
         loading: 'success',
+        msg: action.payload,
       };
     }
     case BORROW_FAILURE_REQUEST: {
       return {
         ...state,
-        msg: action.payload.msg,
         loading: 'failed',
+        msg: action.payload,
       };
     }
     default:

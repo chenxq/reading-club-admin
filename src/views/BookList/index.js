@@ -24,6 +24,20 @@ class BookList extends React.Component {
     // this.handleBorrowAfter();
   }
 
+  showBorrowOpResult(result, titleStr, contentStr) {
+    if (result === 1) {
+      Modal.success({
+        title: `${titleStr} [${contentStr.msg.name}]`,
+        maskClosable: true,
+      });
+    } else if (result === 0) {
+      Modal.error({
+        title: `${titleStr} [${contentStr.msg.msg}]`,
+        maskClosable: true,
+      });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const path = 'deleteStatus.loading';
     const prevLoading = get(prevProps, path, undefined);
@@ -79,21 +93,7 @@ class BookList extends React.Component {
   handleBorrowClick(bookid) {
     const { borrowBook } = this.props;
     borrowBook && borrowBook('joe', bookid);
-    // borrow && alert(borrow('joe', bookid));
   }
-
-  // handleBorrowAfter = () => {
-  //   console.log('处理后面');
-  //   const { borrowBtn } = this.props;
-  //   return (
-  //     <Alert
-  //       message={borrowBtn.msg}
-  //       description={'操作结果' || ''}
-  //       type="success"
-  //       showIcon
-  //     />
-  //   );
-  // };
 
   renderBookList = () => {
     const { bookList } = this.props;
@@ -154,14 +154,13 @@ class BookList extends React.Component {
                 </Button>
                 <Button
                   type="primary"
+                  style={{ marginTop: '5px' }}
                   onClick={(e) => {
                     this.handleBorrowClick(record.id);
                   }}
                 >
                   借阅
                 </Button>
-
-                <Button type="primary">还书</Button>
               </div>
             );
           },
@@ -205,18 +204,12 @@ class BookList extends React.Component {
           okText="确认"
           cancelText="取消"
         >
-          <p>确定删除该书籍吗？`${this.state.bookID}`</p>
+          <p>`确定删除该书籍吗？${this.state.bookID}`</p>
         </DeleteModal>
         {borrow.loading === 'success'
-          ? Modal.success({
-              title: 'This is a success message',
-              content: 'some messages...some messages...',
-            })
-          : borrow.loading === 'failure'
-          ? Modal.error({
-              title: 'This is an error message',
-              content: 'some messages...some messages...',
-            })
+          ? this.showBorrowOpResult(1, '借阅成功', borrow)
+          : borrow.loading === 'failed'
+          ? this.showBorrowOpResult(0, '借阅失败', borrow)
           : null}
       </div>
     );
