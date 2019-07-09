@@ -18,6 +18,7 @@ class BookList extends React.Component {
     };
   }
 
+
   componentDidMount() {
     const { getBookList } = this.props;
     getBookList && getBookList();
@@ -208,8 +209,8 @@ class BookList extends React.Component {
         {borrow.loading === 'success'
           ? this.showBorrowOpResult(1, '借阅成功', borrow)
           : borrow.loading === 'failed'
-          ? this.showBorrowOpResult(0, '借阅失败', borrow)
-          : null}
+            ? this.showBorrowOpResult(0, '借阅失败', borrow)
+            : null}
       </div>
     );
   }
