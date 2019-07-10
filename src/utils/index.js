@@ -1,10 +1,16 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://reading-club-backend.herokuapp.com';
+// const BASE_URL = 'http://localhost:1323';
 
 export default class HttpRequest {
-  static _getRequestUrl(path) {
-    const requestUrl = `${BASE_URL}${path}`;
+  static _getRequestUrl(path, params = {}) {
+    const queryString =
+      Object.keys(params).length > 0 &&
+      `?${Object.keys(params)
+        .map((k) => `${k}=${params[k]}`)
+        .join('&')}`;
+    const requestUrl = `${BASE_URL}${path}${queryString || ''}`;
     return requestUrl;
   }
 
@@ -13,15 +19,14 @@ export default class HttpRequest {
    * @param {*} path, like '/book/borrow', start with '/'
    * @param {*} data
    */
-  static async postService(path, data = {}) {
-    const requestUrl = HttpRequest._getRequestUrl(path);
-
+  static async postService(path, data = {}, params = {}) {
     try {
-      const ret = await axios.post(requestUrl, JSON.stringify(data));
-      console.log('Request result ', ret);
+      const requestUrl = HttpRequest._getRequestUrl(path, params);
+      const ret = await axios.post(requestUrl, JSON.stringify(data || {}));
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
     }
   }
 
@@ -37,6 +42,24 @@ export default class HttpRequest {
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
+    }
+  }
+
+  /**
+   * Delete service
+   * @param {*} path
+   * @param {*} data {a:1,b:2} will be transformed to ?a=1&b=2
+   */
+  static async deleteService(path, data = {}) {
+    const requestUrl = HttpRequest._getRequestUrl(path);
+    try {
+      console.log('===>Delete service', data);
+      const ret = await axios.delete(requestUrl, { data });
+      return ret;
+    } catch (error) {
+      console.error(`Delete request error: ${error.message}`);
+      return error;
     }
   }
 
@@ -54,13 +77,14 @@ export default class HttpRequest {
         headers: {
           'Content-Type': 'application/json',
         },
-        params: data,
-        data,
+        params: (method || 'get').toLowerCase === 'get' ? data : null,
+        data: JSON.stringify(data || {}),
       });
 
       return ret;
     } catch (error) {
       console.error(`Request error: ${error.message}`);
+      return error;
     }
   }
 }
