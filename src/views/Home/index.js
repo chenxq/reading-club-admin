@@ -24,10 +24,10 @@ class AuthView extends React.Component {
             status: 1,
           },
           () => {
-            dispatch(authAction(authInfo));
+            dispatch(authAction(values));
           },
         );
-        auth(values);
+        // auth(values);
       }
     });
   };
@@ -109,6 +109,9 @@ const mapStateToProps = (state) => ({
 
 const AuthForm = Form.create({ name: 'Login' })(AuthView);
 
+/**
+ * 1. 没有mapDispatchToProps，会默认传入dispatch方法
+ */
 export default connect(mapStateToProps)(AuthForm);
 // mapStateToProps,
 // mapDispatchToProps,
