@@ -14,14 +14,19 @@ class AuthView extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { auth } = this.props;
+    const { auth, dispatch } = this.props;
 
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.setState({
-          status: 1,
-        });
+        this.setState(
+          {
+            status: 1,
+          },
+          () => {
+            dispatch(authAction(authInfo));
+          },
+        );
         auth(values);
       }
     });
@@ -98,13 +103,12 @@ const mapStateToProps = (state) => ({
   loginInfo: state.auth,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  auth: (authInfo) => authAction(authInfo)(dispatch),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   auth: (authInfo) => authAction(authInfo)(dispatch),
+// });
 
 const AuthForm = Form.create({ name: 'Login' })(AuthView);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AuthForm);
+export default connect(mapStateToProps)(AuthForm);
+// mapStateToProps,
+// mapDispatchToProps,
