@@ -15,7 +15,7 @@ function authAction(actionType, payload) {
 }
 
 export default function auth(authInfo) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(authAction(AUTH_START));
     try {
       const ret = await authService(authInfo);
@@ -27,10 +27,10 @@ export default function auth(authInfo) {
       localStorage.setItem('jwToken', token);
       //设置axios的headers token
       setAuthToken(token);
-      dispatch(authAction(AUTH_SUCCESS, ret));
+      return dispatch(authAction(AUTH_SUCCESS, ret));
     } catch (e) {
-      dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
-      return;
+      return dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
+      // return;
     }
   };
 }
