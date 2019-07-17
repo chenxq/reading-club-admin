@@ -20,8 +20,7 @@ export default function auth(authInfo) {
     try {
       const ret = await authService(authInfo);
       if (!ret) {
-        dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
-        return;
+        return dispatch(authAction(AUTH_FAILURE, { msg: 'Something wrong!' }));
       }
       const { token } = ret;
       localStorage.setItem('jwToken', token);
