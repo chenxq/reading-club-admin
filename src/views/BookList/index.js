@@ -25,6 +25,9 @@ class BookList extends React.Component {
   }
 
   showBorrowOpResult(result, titleStr, contentStr) {
+    const { borrow } = this.props;
+    borrow.loading = 'init';
+
     if (result === 1) {
       Modal.success({
         title: `${titleStr} [${contentStr.msg.name}]`,
