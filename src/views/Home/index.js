@@ -24,7 +24,7 @@ class AuthView extends React.Component {
             status: 1,
           },
           () => {
-            dispatch(authAction(authInfo));
+            dispatch(authAction(values));
           },
         );
         auth(values);
