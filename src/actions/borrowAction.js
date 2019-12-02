@@ -30,7 +30,7 @@ export default function executeBorrow(username, bookid) {
       }
       dispatch(borrowAction(BORROW_SUCCESS_REQUEST, res));
     } catch (e) {
-      dispatch(borrowAction(BORROW_FAILURE_REQUEST, { msg: '借书系统错误' }));
+      dispatch(borrowAction(BORROW_FAILURE_REQUEST, { msg: '借书程序错误' }));
       return;
     }
   };

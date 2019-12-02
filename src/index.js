@@ -7,9 +7,13 @@ import "./index.css";
 import App from "./App";
 import root from "./reducers"; // default is index.js
 import * as serviceWorker from "./serviceWorker";
+import setAuthToken from './utils/setAuthToken';
 
 const store = createStore(root, applyMiddleware(thunk));
-
+const token = localStorage.getItem('jwToken');
+if (token) {
+  setAuthToken(token);
+}
 
 ReactDOM.render(
   <Provider store={store}>

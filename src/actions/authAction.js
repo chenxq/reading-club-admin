@@ -25,7 +25,7 @@ export default function auth(authInfo) {
       }
       const { token, role } = ret;
       localStorage.setItem('jwToken', token);
-      localStorage.setItem('role', role)
+      localStorage.setItem('role', role);
       //设置axios的headers token
       setAuthToken(token);
       dispatch(authAction(AUTH_SUCCESS, ret));
