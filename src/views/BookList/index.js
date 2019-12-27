@@ -169,15 +169,18 @@ class BookList extends React.Component {
             console.log('===>Button record', record);
             return (
               <div>
-                <Button
-                  id={record.id}
-                  type="primary"
-                  onClick={() => {
-                    this.handleDelete(record);
-                  }}
-                >
-                  删除
-                </Button>
+                {localStorage.role === 'admin'
+                  ? <Button
+                    id={record.id}
+                    type="primary"
+                    onClick={() => {
+                      this.handleDelete(record);
+                    }}
+                  >
+                    删除
+                  </Button> : null
+                }
+
                 <Button
                   type="primary"
                   style={{ marginTop: '5px' }}
