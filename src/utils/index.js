@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://reading-club-backend.herokuapp.com';
+const BASE_URL = 'https://ringcentral-qa-library.herokuapp.com';
 // const BASE_URL = 'http://localhost:1323';
 
 export default class HttpRequest {
